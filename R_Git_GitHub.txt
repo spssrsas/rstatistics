@@ -1,0 +1,31 @@
+[ R + Git + Github ]
+
+1. Github 회원 가입
+  - github.com
+
+2. Git 설치
+  - https://git-scm.com/
+
+3. R Project 연동
+  1) R 설치
+  2) RStudio 설치
+  3) Git 초기화
+    (RStudio) Console 창 옆 Terminal 창에서 실행
+    - 사용자 이름 설정 : git config --global user.name "사용할이름기입"
+    - 사용자 이메일 설정 : git config --global user.email "사용할이메일주소기입"
+    - 설정값 확인 : git config --list
+  4) R Project 생성
+    (RStudio)
+    - File > New Project Wizard : Version Control > Git
+      : Repository URL : https://github.com/spssrsas/rstatistics
+      : 작업디렉토리 임의 지정
+      : Create Project
+  
+  (작업 後)
+  - 우측 상단 'Git'탭으로 이동
+  - Commit : Commit message 입력 後 Commit
+  - Push (필요시 Github 계정/비번 입력)
+
+  5) GitHub에서 변경 내용 확인
+    - https://github.com/spssrsas/rstatistics
+  
