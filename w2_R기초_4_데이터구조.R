@@ -45,7 +45,7 @@ if (exists("rasterImage")) { # can plot only in R 2.11.0 and higher
   } else {
     # any reasonable device will be fine using alpha
     rasterImage(img, 1.2, 1.27, 1.8, 1.73)
-    rasterImage(img.n, 1.5, 1.5, 1.9, 1.8)
+    #rasterImage(img.n, 1.5, 1.5, 1.9, 1.8)
     
   }
   
