@@ -22,6 +22,7 @@ getwd()
 # lapply()
 # sapply()
 # mapply()
+# tapply()
 
 
 # apply
@@ -92,3 +93,12 @@ rep(1,4)
 rep(2,3)
 rep(3,2)
 rep(4,1)
+
+# Factor에 유용한 함수
+# tapply()
+# 운동별 습관에 따른 맥박수 통계
+tapply(survey$Pulse, INDEX = survey$Exer, FUN = mean, na.rm=T)
+# 성별 습관에 따른 맥박수 통계
+tapply(survey$Pulse, INDEX = survey$Sex, FUN = mean, na.rm=T)
+# 운동별, 성별 습관에 따른 맥박수 통계
+tapply(survey$Pulse, INDEX = list(survey$Exer, survey$Sex), FUN = mean, na.rm=T)
