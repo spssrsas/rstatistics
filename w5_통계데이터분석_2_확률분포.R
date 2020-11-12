@@ -1,0 +1,253 @@
+#--------------------------------------------------------------------------
+# 화일명 : w5_통계데이터분석_2_확률분포.R
+# 설  명 : 통계 데이터 분석 (통계데이터분석 - 확률분포)
+# 일  자 : 2020.11.12
+# 생성자 : Jigwan
+# 패키지 : 
+# 분석방법: 
+#--------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------
+# 0. 환경 설정
+#--------------------------------------------------------------------------
+## 작업 디렉토리 설정
+#setwd("C:/work/RProject/rstatistics")
+getwd()
+
+
+#--------------------------------------------------------------------------
+# 확률분포 (관련 함수 - 이미지)
+#--------------------------------------------------------------------------
+#install.packages("png")
+library(png)
+
+#read file
+img <- readPNG("image/probabilityDistribution.png")
+
+# read it also in native format
+img.n <- readPNG("image/probabilityDistribution.png", TRUE)
+
+# if your R supports it, we'll plot it
+if (exists("rasterImage")) { # can plot only in R 2.11.0 and higher
+  plot(1:2, type='n')
+  
+  if (names(dev.cur()) == "windows") {
+    # windows device doesn't support semi-transparency so we'll need
+    # to flatten the image
+    transparent <- img[,,4] == 0
+    img <- as.raster(img[,,1:3])
+    img[transparent] <- NA
+    
+    # interpolate must be FALSE on Windows, otherwise R will
+    # try to interpolate transparency and fail
+    rasterImage(img, 1.2, 1.27, 1.8, 1.73, interpolate=FALSE)
+    
+  } else {
+    # any reasonable device will be fine using alpha
+    rasterImage(img, 1.2, 1.27, 1.8, 1.73)
+    #rasterImage(img.n, 1.5, 1.5, 1.9, 1.8)
+    
+  }
+  
+}
+
+
+#--------------------------------------------------------------------------
+# 이항분포 (binomial distribution)
+#--------------------------------------------------------------------------
+# - 대표적인 이산화률분포(discrete* probability distribution)로서
+#   매회 어떤 사건이 일어날 확률이 동일한 독립 시행의 경우에 있어서
+#   이 사건이 일어나는 획수가 만들어 내는 분포
+#
+#  *discrete : clearly separate or different in shape or form. 분리된
+# 
+# - 예를 들면, 동전을 일정 횟수 반복하여 던지는 실험에서 매 시행 시마다
+#   숫자면이 나타날 확률이 1/2이하고 할 때 숫자면이 나타나는 횟수는 이항분포를 따름
+
+
+
+#--------------------------------------------------------------------------
+# Exercise
+#--------------------------------------------------------------------------
+# 동전을 10번 던졌을 때, 숫자면이 7번 나올 확률
+# 확률 밀도 함수
+dbinom(7, size = 10, prob = 0.5) # 0.5 : 동전 숫자면이 나올 확률
+
+# 특정 횟 수까지 누적 확률
+# 확률 분포 함수
+# 동전을 10번 던졌을 때, 숫자면이 7번 이하가 나올 확률
+pbinom(7, size = 10, prob = 0.5)
+sum(dbinom(0:7, size = 10, prob = 0.5))
+
+
+# 동전을 10번 던졌을 때, 숫자면이 8번 이상이 나올 확률
+pbinom(7, size = 10, prob = 0.5, lower.tail = F)
+
+
+# 4번 이상 + 7번 이하 = 7번 이하 - 3번 이상
+pbinom(7, size = 10, prob = 0.5) - pbinom(3, size = 10, prob = 0.5)
+
+
+
+# 두 관측값간의 누적 확률값
+# 3번이하 + 7번 이하
+pbinom(c(3,7), size = 10, prob = 0.5)
+# 4번 이상 + 7번 이하 = 7번 이하 - 3번 이상
+diff(pbinom(c(3,7), size = 10, prob = 0.5))
+
+
+
+# 이항분로로 부터 난수 생성
+set.seed(1) # 난수에 대해 동일한 실행결과 유도
+rbinom(1, size = 10, prob = 0.5) # 난수 1개 생성
+rbinom(5, size = 10, prob = 0.5) # 난수 5개 생성
+
+
+
+#--------------------------------------------------------------------------
+# 정규분포 (normal distribution)
+#--------------------------------------------------------------------------
+# - 대표적인 연속확률분포(continuous probability distribution)로서
+#   통계적 검정을 위해 가장 널리 활용되는 분포
+# 
+# - 정규분포에서는 대부분의 관측값이 중앙에 몰려 있으며 중앙에서 멀러질수록
+#   그 빈도수가 점점 작아지는 종 모양의 대칭인 모습을 가짐
+#
+# (특성)
+# 평균과 표준편차를 알고 있으면 관측값이 일정구간내 포함될 확률을 구할 수 있음
+
+
+#--------------------------------------------------------------------------
+# 표준정규분포 (standard normal distribution)
+#--------------------------------------------------------------------------
+# 평균과 표준편차가 다르기 때문에, 
+# 모든 정규분포가 동일한 분포 형태를 가질수는 없지만,
+# 어는 정규분포이든 평균을 중심으로 일정 범위내의 비율은 동일하다는 특성을 갖음
+# 
+# [ 표준정규분포(Z분포) ]
+# - 평균과 표준편차가 다른 다양한 형태의 정규 분포를 
+#   비교 가능한 통일된 하나의 분포로 변환 시킨 것
+# - 표준점수(Z)로 이루어진 분포를 말하며, 평균은 0, 표준편차는 1
+
+
+#--------------------------------------------------------------------------
+# 정규분포 (그래프 - 이미지)
+#--------------------------------------------------------------------------
+#install.packages("png")
+library(png)
+
+#read file
+img <- readPNG("image/normalDisribution.png")
+
+# read it also in native format
+img.n <- readPNG("image/normalDisribution.png", TRUE)
+
+# if your R supports it, we'll plot it
+if (exists("rasterImage")) { # can plot only in R 2.11.0 and higher
+  plot(1:2, type='n')
+  
+  if (names(dev.cur()) == "windows") {
+    # windows device doesn't support semi-transparency so we'll need
+    # to flatten the image
+    transparent <- img[,,4] == 0
+    img <- as.raster(img[,,1:3])
+    img[transparent] <- NA
+    
+    # interpolate must be FALSE on Windows, otherwise R will
+    # try to interpolate transparency and fail
+    rasterImage(img, 1.2, 1.27, 1.8, 1.73, interpolate=FALSE)
+    
+  } else {
+    # any reasonable device will be fine using alpha
+    rasterImage(img, 1.2, 1.27, 1.8, 1.73)
+    #rasterImage(img.n, 1.5, 1.5, 1.9, 1.8)
+    
+  }
+  
+}
+
+
+#--------------------------------------------------------------------------
+# Exercise
+#--------------------------------------------------------------------------
+# pnorm() : 주어진 관측값 까지의 누적 확률 값 계산
+
+# 성인의 IQ가 평균 100이고, 표준편차가 10인 정규분포를 따른다고 할 때
+
+# IQ가 110 이하일 확률 계산
+pnorm(110, mean = 100, sd=10)
+
+# IQ가 110을 초과할 확률 계산
+pnorm(110, mean = 100, sd=10, lower.tail = F)
+
+
+# 표준정규분포 확률 계산
+# 표준정규분포에서 0이하일 확률
+pnorm(0)
+pnorm(0, mean = 0, sd =1)
+
+
+# 두개의 확률값 간의 구간의 확률계산
+# 각 확률값 간의 누적 확률값을 계산후 차이를 계산
+# 90 < IQ <= 100 일 확률
+pnorm(110, mean = 100, sd=10) - pnorm(90, mean = 100, sd=10)
+diff(pnorm(c(90, 110), mean = 100, sd = 10))
+
+
+#--------------------------------------------------------------------------
+# qnorm() : 누적 확률이 주어지고, 확률에 대응되는 관측값 계산
+# 정규분포에 대한 100분위수를 계산하는 것과 동일
+
+# 평균 100, 표준편차 10인 정규분포에서 누적확률 5% 이하에 대응되는 관측 값
+qnorm(0.05, mean = 100, sd=10) # IQ 83.5는 전체의 5%를 차지한다
+qnorm(0.95, mean = 100, sd=10) # 상위 5%는 IQ가 116 이상이다
+
+qnorm(c(0.05,0.95), mean = 100, sd=10) #
+
+qnorm(0.025);qnorm(0.975) # (표준정규분포) 95% 신뢰구간 : -1.96 ~ 1.96
+qnorm(c(0.025, 0.975))
+
+
+# 정규분포 난수 생성
+set.seed(1)
+rnorm(1, mean = 100, sd=10)
+rnorm(5, mean = 100, sd=10)
+rnorm(1) # 표준정규분포로 부터 나수 1개 생성
+rnorm(5)
+
+
+rnorm(3, mean = c(-10, 0, 10), sd=1)
+rnorm(6, mean = c(-10, 0, 10), sd=1)
+
+
+
+#--------------------------------------------------------------------------
+# 데이터 정규성 검정 (Shapiro-Wilk normality test)
+#--------------------------------------------------------------------------
+# 귀무가설 : 표본데이터가 정규성을 만족한다
+set.seed(123)
+shapiro.test(rnorm(100, mean=100, sd=10)) # 귀무가설을 기각하지 못한다
+
+# unif : 일양분포;연속균등분포(continuous uniform distribution)
+shapiro.test(runif(100, min=2, max=4)) # 귀무가설을 기각하고 대립가설 채택
+
+# QQ 도표를 이용해 시각적으로 확인
+# QQ 도표 : normal quantile-quantile plot
+set.seed(123)
+#--------------------------------------------------------------------------
+# qqnorm 
+# : qqnorm 함수에 인수로 표본 데이터를 제공하게 되면 표준정규분포로부터 
+#   인수로 주어진 표본데이터 크기 만큼의 이론적 표본을 추가로 생성
+# : 두 표본의 데이터를 크기 순으로 정렬하고 
+#   정렬된 각 쌍의 데이터를 산점도 형식으로 그린다
+# X축 : 이론적 정규분포로 부터 생성된 표본
+# Y축 : 실제 표본
+qqnorm(rnorm(100, mean=100, sd=10), col="blue",
+       main = "Sample from Normal Distribution")
+# 첫 번쩨 사분위수와 세 번째 사분위수를 통과하는 직선
+qqline(rnorm(100, mean=100, sd=10))
+
+
+qqnorm(runif(100, min=2, max=4), col="red",
+       main = "Sample from Uniform Distribution")
+qqline(runif(100, min=2, max=4))
