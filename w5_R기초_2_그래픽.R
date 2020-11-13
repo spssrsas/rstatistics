@@ -107,8 +107,46 @@ points(faithful, pch=19, col="blue")
 #--------------------------------------------------------------------------
 # 색상
 #--------------------------------------------------------------------------
+colours()
+# http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
+
+# palette() : 현재 설정된 색상 팔레트 확인
+palette()
+palette(rainbow(6))
+palette()
+
+palette("default")
+palette()
+
+# col="white", col="#FFFFFF", col=rgb(1,1,1), col=hsv(0,0,1)
+
+n <- 12
+pie(rep(1,n), col=1:n)
+
+# 팔레트 칼라 생성 함수들
+# rainbow()
+# heat.colors()
+# terrain.colors()
+# topo.colors()
+# cm.colors()
+# gray()
+
+pie(rep(1,n), col=rainbow(n))
+pie(rep(1,n), col=heat.colors(n))
+pie(rep(1,n), col=terrain.colors(n))
+pie(rep(1,n), col=topo.colors(n))
+pie(rep(1,n), col=cm.colors(n))
+pie(rep(1,n), col=gray(level = seq(0,1, length=n)))
+
+# 색상 투병도 조정
+pie(rep(1,n), col=rainbow(n, alpha = seq(0,1,length=n))) # 0 <- 투명, 불투명 -> 1
+pie(rep(1,n), col=gray(level=seq(0,1, length=12),
+                       alpha=seq(0,1, length=12)))
 
 
+# RColorBrewer 패키지 : 다향한 색상 팔레트
+install.packages("RColorBrewer")
+library(RColorBrewer)
 
 #--------------------------------------------------------------------------
 # 크기
