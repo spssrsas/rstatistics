@@ -31,7 +31,7 @@ plot(faithful,
      main="Old Faithful Geyser",
      sub="Yellowstone National Park",
      xlab="Eruption time (minutes)",
-     ylab="Waiting time (minutes")
+     ylab="Waiting time (minutes)")
 
 # 축 레이블 수직/수평 표기 조정
 plot(faithful, las=0)
@@ -145,15 +145,90 @@ pie(rep(1,n), col=gray(level=seq(0,1, length=12),
 
 
 # RColorBrewer 패키지 : 다향한 색상 팔레트
-install.packages("RColorBrewer")
+# install.packages("RColorBrewer")
 library(RColorBrewer)
+?RColorBrewer
+
+display.brewer.all()
+display.brewer.pal(3, "Dark2")
+display.brewer.pal(9, "Blues")
+
+n <- 9
+pie(rep(1,n), col = brewer.pal(n, "Blues"))
+pie(rep(1,n), col = brewer.pal(n, "Greens"))
+pie(rep(1,n), col = brewer.pal(n, "BuGn"))
+pie(rep(1,n), col = brewer.pal(n, "GnBu"))
+
+# 제목, 축, 라벨 색상 조정
+plot(faithful, pch=19, col="tomato",
+     main="Old Faithful Geyser",
+     sub="Yellowstone National Park",
+     xlab="Eruption time (minutes)",
+     ylab="Waiting time (minutes)",
+     col.main="navy",
+     col.sub="purple",
+     col.lab="royalblue",
+     col.axis="brown")
+
 
 #--------------------------------------------------------------------------
 # 크기
 #--------------------------------------------------------------------------
+# cex 활용, 포인트/텍스트/타이틀/축라벨/축이름 조정
+x <- seq(0.5, 1.5, 0.25);x
+y <- rep(1, length(x))
+plot(x, y, pch=19, cex=x,
+     main = "Effects of cex on symbol and text size")
+text(x, y+0.2, labels=x, cex = x)
 
+plot(x, y, pch=19, cex=x,
+     main = "Effects of cex on symbol and text size",
+     cex.main=1.5,
+     cex.lab=1.0,
+     cex.axis=0.75)
+
+# lwd 활용, 선 크기 조정
+plot(LakeHuron, lwd=1)
+plot(LakeHuron, lwd=2)
 
 
 #--------------------------------------------------------------------------
 # 글꼴과 글씨체
 #--------------------------------------------------------------------------
+# family 인수 지정, 글꼴 조정
+windowsFonts()
+
+plot(faithful, pch=19, col="tomato",
+     main="Old Faithful Geyser",
+     sub="Yellowstone National Park",
+     xlab="Eruption time (minutes)",
+     ylab="Waiting time (minutes)",
+     family="sans")
+
+# 기존에 정의된 글꼴 관계 변경
+windowsFonts(
+  A=windowsFont("Arial Black"),
+  B=windowsFont("Book Antiqua"),
+  C=windowsFont("Calisto MT")
+)
+
+plot(faithful, pch=19, col="tomato",
+     main="Old Faithful Geyser",
+     sub="Yellowstone National Park",
+     xlab="Eruption time (minutes)",
+     ylab="Waiting time (minutes)",
+     family="C")
+
+# font 인수 지정, 글씨체 조정
+?par
+
+plot(faithful, pch=19, col="cornflowerblue",
+     main="Old Faithful Geyser",
+     sub="Yellowstone National Park",
+     xlab="Eruption time (minutes)",
+     ylab="Waiting time (minutes)",
+     family="serif",
+     font.main=4,
+     font.sub=1,
+     font.lab=3,
+     font.axis=2)
